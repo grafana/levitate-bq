@@ -1,6 +1,5 @@
 import { BigQuery } from "@google-cloud/bigquery";
 import type bigquery from "@google-cloud/bigquery/build/src/types";
-import path from "path";
 
 type Options = {
   dataset: string;
@@ -8,7 +7,8 @@ type Options = {
 };
 
 const client = new BigQuery({
-  keyFilename: path.join(__dirname, process.env["BIGQUERY_KEY_FILENAME"] ?? ''),
+  credentials: credentialsFromEnv(),
+  projectId: projectIdFromEnv(),
 });
 
 export function writeToBigQueryTable(options: Options) {
@@ -97,4 +97,13 @@ function createSchema(): bigquery.ITableSchema {
       },
     ],
   };
+}
+
+function credentialsFromEnv(): any {
+  const credentialsJson = process.env['BQ_SA_KEY'];
+  return JSON.parse(credentialsJson ?? '{}');
+}
+
+function projectIdFromEnv(): string {
+  return process.env['BQ_PROJECT'] ?? '';
 }
