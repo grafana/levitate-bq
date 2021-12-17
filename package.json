@@ -1,0 +1,49 @@
+{
+  "name": "@grafana/levitate-bq",
+  "version": "0.1.0",
+  "description": "takes @grafana/levitate output and streams it to BigQuery",
+  "main": "dist/index.js",
+  "bin": {
+    "levitate-bq": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc-watch"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^5.9.2",
+    "JSONStream": "^1.3.5",
+    "chalk": "^5.0.0",
+    "stream-json": "^1.7.3",
+    "typescript": "^4.5.2",
+    "yargs": "^17.2.1"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.2",
+    "@types/jsonstream": "^0.8.30",
+    "@types/node": "^16.11.10",
+    "@types/stream-json": "^1.7.1",
+    "@types/yargs": "^17.0.7",
+    "tsc-watch": "^4.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grafana/levitate-bq.git"
+  },
+  "keywords": [
+    "levitate",
+    "bigquery"
+  ],
+  "author": "Grafana Labs <team@grafana.com> (https://grafana.com)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/grafana/levitate-bq/issues"
+  },
+  "homepage": "https://github.com/grafana/levitate-bq#readme",
+  "volta": {
+    "node": "16.13.1"
+  }
+}
