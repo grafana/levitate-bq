@@ -1,9 +1,11 @@
 import yargs from "yargs";
+import { Transform } from "stream";
 import { pipeline } from "stream/promises";
 import { parser } from "stream-json/jsonl/Parser";
 import { stringer } from "stream-json/jsonl/Stringer";
 import { applySchemaToBigQuery, writeToBigQueryTable } from "./bigQuery";
 import { mapper } from "./mapper";
+import { BigQueryRow } from "./types";
 import { printProgress } from "./printProgress";
 
 (async function () {
@@ -21,6 +23,7 @@ import { printProgress } from "./printProgress";
 
     const { d: dataset, t: table } = argv;
     const options = { dataset, table };
+    let numberOfMessages = 0;
 
     await applySchemaToBigQuery(options);
 
@@ -30,8 +33,21 @@ import { printProgress } from "./printProgress";
       mapper(),
       printProgress(),
       stringer(),
-      writeToBigQueryTable(options)
+
+      // Creating a final summing up message
+      // TODO: this probably can be done in a much nicer way
+      new Transform({
+        objectMode: true,
+        transform: (row: BigQueryRow, _, done) => {
+          numberOfMessages += 1;
+
+          done(null, row);
+        },
+      }),
+      writeToBigQueryTable(options),
     );
+
+    console.log(`Found and pushed ${numberOfMessages} import statements.`)
   } catch (error: unknown) {
     console.error("Failed due too: ", error);
   }
