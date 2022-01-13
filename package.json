@@ -23,6 +23,7 @@
     "yargs": "^17.2.1"
   },
   "devDependencies": {
+    "@grafana/levitate": "^0.1.4",
     "@tsconfig/node16": "^1.0.2",
     "@types/debug": "^4.1.7",
     "@types/jsonstream": "^0.8.30",
