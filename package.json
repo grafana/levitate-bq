@@ -1,6 +1,6 @@
 {
   "name": "@grafana/levitate-bq",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "takes @grafana/levitate output and streams it to BigQuery",
   "main": "dist/index.js",
   "bin": {
